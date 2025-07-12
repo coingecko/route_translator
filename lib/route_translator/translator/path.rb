@@ -1,3 +1,5 @@
+raise "--- 1207251159 DEBUGGER ---"
+
 # frozen_string_literal: true
 
 require_relative 'path/segment'
