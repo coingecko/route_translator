@@ -63,10 +63,6 @@ module RouteTranslator
       RouteTranslator::Translator::RouteHelpers.add route.name, route.route_set.named_routes
 
       available_locales.each do |locale|
-        if locale == :pt
-          locale = :"pt-br"
-        end
-
         translated_path = translate_path(route.path, locale, route.scope)
         next unless translated_path
 
