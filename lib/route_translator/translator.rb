@@ -55,7 +55,7 @@ module RouteTranslator
     module_function
 
     def available_locales
-      locales = RouteTranslator.available_locales.reject { |locale| locale.to_s == 'pt' }
+      locales = RouteTranslator.available_locales
       # Make sure the default locale is translated in last place to avoid
       # problems with wildcards when default locale is omitted in paths. The
       # default routes will catch all paths like wildcard if it is translated first.
