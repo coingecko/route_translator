@@ -11,6 +11,7 @@ module RouteTranslator
 
       def locale_from_args(args)
         args_hash = args.find { |arg| arg.is_a?(Hash) }
+        args_hash&.fetch(:locale, nil)
       end
 
       def translate_name(name, locale, named_routes_names)
