@@ -45,16 +45,15 @@ module RouteTranslator
         end
         translated_segments.reject!(&:empty?)
 
-        # Handle pt locale conversion when locale param is present
-        if locale_param_present?(new_path) && locale.to_s.downcase == "pt"
-          new_path.gsub!(":#{RouteTranslator.locale_param_key}", "pt-br")
-        end
-
         if display_locale?(locale) && !locale_param_present?(new_path)
           translated_segments.unshift(locale_segment(locale))
         end
 
         joined_segments = translated_segments.join('/')
+
+        if locale_param_present?(new_path) && locale.to_s.downcase == "pt"
+          joined_segments.gsub!(":#{RouteTranslator.locale_param_key}", "pt-br")
+        end
 
         "/#{joined_segments}#{final_optional_segments}".gsub(%r{\/\(\/}, '(/')
       end
