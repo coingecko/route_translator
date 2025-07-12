@@ -11,7 +11,10 @@ module RouteTranslator
 
       def locale_from_args(args)
         args_hash = args.find { |arg| arg.is_a?(Hash) }
-        args_hash&.fetch(:locale, nil)
+        locale = args_hash&.fetch(:locale, nil)
+        if locale.is_a?(Symbol) && locale == :pt
+          locale = :"pt-br"
+        end
       end
 
       def translate_name(name, locale, named_routes_names)
@@ -52,7 +55,7 @@ module RouteTranslator
     module_function
 
     def available_locales
-      locales = RouteTranslator.available_locales
+      locales = RouteTranslator.available_locales.reject { |locale| locale.to_s == 'pt' }
       # Make sure the default locale is translated in last place to avoid
       # problems with wildcards when default locale is omitted in paths. The
       # default routes will catch all paths like wildcard if it is translated first.
@@ -64,6 +67,10 @@ module RouteTranslator
       RouteTranslator::Translator::RouteHelpers.add route.name, route.route_set.named_routes
 
       available_locales.each do |locale|
+        if locale == :pt
+          locale = :"pt-br"
+        end
+
         translated_path = translate_path(route.path, locale, route.scope)
         next unless translated_path
 

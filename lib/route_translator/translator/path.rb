@@ -1,5 +1,3 @@
-p "--- 1207251159 DEBUGGER ---"
-
 # frozen_string_literal: true
 
 require_relative 'path/segment'
@@ -28,8 +26,6 @@ module RouteTranslator
         end
 
         def locale_segment(locale)
-          p "--- 1207251159 DEBUGGER ---"
-          p locale
           if locale.to_s == "pt"
             "pt-br"
           else

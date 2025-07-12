@@ -78,6 +78,10 @@ module RouteTranslator
 
   def locale_from_params(params)
     locale = params[config.locale_param_key]&.to_sym
+    if locale == :pt
+      locale = :"pt-br"
+    end
+
     locale if I18n.available_locales.include?(locale)
   end
 
