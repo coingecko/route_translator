@@ -11,10 +11,6 @@ module RouteTranslator
 
       def locale_from_args(args)
         args_hash = args.find { |arg| arg.is_a?(Hash) }
-        locale = args_hash&.fetch(:locale, nil)
-        if locale.is_a?(Symbol) && locale == :pt
-          locale = :"pt-br"
-        end
       end
 
       def translate_name(name, locale, named_routes_names)

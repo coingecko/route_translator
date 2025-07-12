@@ -26,7 +26,7 @@ module RouteTranslator
         end
 
         def locale_segment(locale)
-          if locale.to_s == "pt"
+          if locale.to_s.downcase == "pt"
             "pt-br"
           else
             locale.to_s.downcase
@@ -44,6 +44,11 @@ module RouteTranslator
           seg.split('.').map { |phrase| Segment.translate(phrase, locale, scope) }.join('.')
         end
         translated_segments.reject!(&:empty?)
+
+        # Handle pt locale conversion when locale param is present
+        if locale_param_present?(new_path) && locale.to_s.downcase == "pt"
+          new_path.gsub!(":#{RouteTranslator.locale_param_key}", "pt-br")
+        end
 
         if display_locale?(locale) && !locale_param_present?(new_path)
           translated_segments.unshift(locale_segment(locale))
