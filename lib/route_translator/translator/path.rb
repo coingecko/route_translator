@@ -26,8 +26,10 @@ module RouteTranslator
         end
 
         def locale_segment(locale)
-          if locale.to_s.downcase == "pt"
-            "pt-br"
+          if RouteTranslator.config.locale_segment_proc
+            locale_segment_proc = RouteTranslator.config.locale_segment_proc
+
+            locale_segment_proc.to_proc.call(locale)
           else
             locale.to_s.downcase
           end
