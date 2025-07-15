@@ -53,6 +53,10 @@ module RouteTranslator
 
         joined_segments = translated_segments.join('/')
 
+        if locale_param_present?(new_path) && locale.to_s.downcase == "pt"
+          joined_segments.gsub!(":#{RouteTranslator.locale_param_key}", "pt-br")
+        end
+
         "/#{joined_segments}#{final_optional_segments}".gsub(%r{\/\(\/}, '(/')
       end
     end
